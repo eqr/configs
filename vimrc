@@ -1,6 +1,13 @@
 execute pathogen#infect()
 execute pathogen#helptags()
-colorscheme crunchbang
+
+if has('gui_running')
+ colorscheme crunchbang
+else
+ colorscheme default
+endif
+
+
 " colorscheme carbonized-dark
 " colorscheme solarized
 
@@ -772,3 +779,4 @@ map <F2> :NERDTreeToggle<CR>
 map <C-S-L> :NERDTreeFind<CR>
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
+noremap <F3> :Autoformat<CR>
