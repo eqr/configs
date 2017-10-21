@@ -1,6 +1,7 @@
 execute pathogen#infect()
 execute pathogen#helptags()
-colorscheme carbonized-dark
+colorscheme crunchbang
+" colorscheme carbonized-dark
 " colorscheme solarized
 
 " vim-bootstrap 564604c
@@ -185,9 +186,6 @@ set ruler
 set number
 
 let no_buffers_menu=1
-if !exists('g:not_finish_vimplug')
-  colorscheme molokai
-endif
 
 set mousemodel=popup
 set t_Co=256
