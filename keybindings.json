@@ -38,5 +38,9 @@
         "key": "ctrl+`",
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "terminalFocus"
+    },
+    {
+        "key": "cmd+shift+t",
+        "command": "workbench.action.tasks.test"
     }
 ]
