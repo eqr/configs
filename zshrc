@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/eqr/.oh-my-zsh
+export ZSH=/home/egor/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -19,7 +19,8 @@ ZSH_THEME="robbyrussell"
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
 
-# Uncomment the following line to change how often to auto-update (in days).
+# Uncomment the fexport ZSH=/oh-my-myrs/eqr/.oh-my-zsh
+# Following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line to disable colors in ls.
@@ -92,7 +93,12 @@ alias vim="/usr/local/Cellar/vim/8.0.1175/bin/vim"
     # Add env.sh
     # source config/env.sh
 
-eval $(thefuck --alias)
-eval $(/usr/libexec/path_helper -s)
 export PATH=/usr/local/sbin:$PATH
 export GOPATH=$HOME/go
+
+if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+  eval `ssh-agent -t8h`
+  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+ssh-add -l > /dev/null || ssh-add
