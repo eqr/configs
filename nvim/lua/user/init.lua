@@ -25,15 +25,15 @@ local config = {
   -- Disable default plugins
   enabled = {
     bufferline = true,
-    neo_tree = false,
+    neo_tree = true,
     lualine = true,
     gitsigns = true,
     colorizer = true,
-    toggle_term = false,
+    toggle_term = true,
     comment = true,
     symbols_outline = true,
     indent_blankline = true,
-    dashboard = false,
+    dashboard = true,
     which_key = true,
     neoscroll = true,
     ts_rainbow = true,
@@ -79,6 +79,9 @@ local config = {
     register_n_leader = {
       -- ["N"] = { "<cmd>tabnew<cr>", "New Buffer" },
     },
+    reveal = {
+      ["o"] = {"<cmd>Neotree Reveal<CR>", "NeoTree Reveal"},
+    }
   },
 
   -- Extend LSP configuration
