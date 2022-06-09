@@ -2,13 +2,20 @@ local config = {
 
   -- Set colorscheme
   --colorscheme = "default_theme",
-  --colorscheme = "atom-dark",
-  --colorscheme = "tender",
-  colorscheme = "OceanicNext",
-  
+  colorscheme = "dracula",
+  -- set vim options here (vim.<first_key>.<second_key> =  value)
+  options = {
+    opt = {
+      relativenumber = true, -- sets vim.opt.relativenumber
+    },
+    g = {
+      mapleader = " ", -- sets vim.g.mapleader
+    },
+  },
+
   -- Default theme configuration
   default_theme = {
-    diagnostics_style = "none",
+    diagnostics_style = { italic = true },
     -- Modify the color table
     colors = {
       fg = "#abb2bf",
@@ -22,25 +29,7 @@ local config = {
     end,
   },
 
-  -- Disable default plugins
-  enabled = {
-    bufferline = true,
-    neo_tree = true,
-    lualine = true,
-    gitsigns = true,
-    colorizer = true,
-    toggle_term = true,
-    comment = true,
-    symbols_outline = true,
-    indent_blankline = true,
-    dashboard = true,
-    which_key = true,
-    neoscroll = true,
-    ts_rainbow = true,
-    ts_autotag = true,
-  },
-
-  -- Disable AstroVim ui features
+  -- Disable AstroNvim ui features
   ui = {
     nui_input = true,
     telescope_select = true,
@@ -50,7 +39,12 @@ local config = {
   plugins = {
     -- Add plugins, the packer syntax without the "use"
     init = {
-      -- { "andweeb/presence.nvim" },
+      -- You can disable default plugins as follows:
+      -- ["goolord/alpha-nvim"] = { disable = true },
+
+      -- You can also add new plugins here as well:
+      { "github/copilot.vim" },
+      { "dracula/vim" },
       -- {
       --   "ray-x/lsp_signature.nvim",
       --   event = "BufRead",
@@ -63,36 +57,67 @@ local config = {
     treesitter = {
       ensure_installed = { "lua" },
     },
+    ["nvim-lsp-installer"] = {
+      ensure_installed = { "sumneko_lua" },
+    },
     packer = {
       compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
     },
   },
 
-  -- Add paths for including more VS Code style snippets in luasnip
+  -- LuaSnip Options
   luasnip = {
+    -- Add paths for including more VS Code style snippets in luasnip
     vscode_snippet_paths = {},
+    -- Extend filetypes
+    filetype_extend = {
+      javascript = { "javascriptreact" },
+    },
   },
 
   -- Modify which-key registration
   ["which-key"] = {
-    -- Add bindings to the normal mode <leader> mappings
-    register_n_leader = {
-      -- ["N"] = { "<cmd>tabnew<cr>", "New Buffer" },
+    -- Add bindings
+    register_mappings = {
+      -- first key is the mode, n == normal mode
+      n = {
+        -- second key is the prefix, <leader> prefixes
+        ["<leader>"] = {
+          -- which-key registration table for normal mode, leader prefix
+          -- ["N"] = { "<cmd>tabnew<cr>", "New Buffer" },
+       },
+      },
     },
-    reveal = {
-      ["o"] = {"<cmd>Neotree Reveal<CR>", "NeoTree Reveal"},
-    }
+  },
+
+  -- CMP Source Priorities
+  -- modify here the priorities of default cmp sources
+  -- higher value == higher priority
+  -- The value can also be set to a boolean for disabling default sources:
+  -- false == disabled
+  -- true == 1000
+  cmp = {
+    source_priority = {
+      nvim_lsp = 1000,
+      luasnip = 750,
+      buffer = 500,
+      path = 250,
+    },
   },
 
   -- Extend LSP configuration
   lsp = {
+    -- enable servers that you already have installed without lsp-installer
+    servers = {
+      -- "pyright"
+    },
     -- add to the server on_attach function
     -- on_attach = function(client, bufnr)
     -- end,
 
     -- override the lsp installer server-registration function
     -- server_registration = function(server, opts)
-    --   server:setup(opts)
+    --   require("lspconfig")[server.name].setup(opts)
     -- end
 
     -- Add overrides for LSP server settings, the keys are the name of the server
@@ -146,7 +171,11 @@ local config = {
       -- NOTE: You can remove this on attach function to disable format on save
       on_attach = function(client)
         if client.resolved_capabilities.document_formatting then
-          vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()"
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            desc = "Auto format before save",
+            pattern = "<buffer>",
+            callback = vim.lsp.buf.formatting_sync,
+          })
         end
       end,
     }
@@ -155,22 +184,31 @@ local config = {
   -- This function is run last
   -- good place to configure mappings and vim options
   polish = function()
-    local opts = { noremap = true, silent = true }
-    local map = vim.api.nvim_set_keymap
-    local set = vim.opt
-    -- Set options
-    set.relativenumber = true
-
     -- Set key bindings
-    map("n", "<C-s>", ":w!<CR>", opts)
+    vim.keymap.set("n", "<C-s>", ":w!<CR>")
+    vim.keymap.set("n", "<Leader>e", ":Neotree reveal<CR>")
 
     -- Set autocommands
-    vim.cmd [[
-      augroup packer_conf
-        autocmd!
-        autocmd bufwritepost plugins.lua source <afile> | PackerSync
-      augroup end
-    ]]
+    vim.api.nvim_create_augroup("packer_conf", { clear = true })
+    vim.api.nvim_create_autocmd("BufWritePost", {
+      desc = "Sync packer after modifying plugins.lua",
+      group = "packer_conf",
+      pattern = "plugins.lua",
+      command = "source <afile> | PackerSync",
+    })
+
+    -- Set up custom filetypes
+    -- vim.filetype.add {
+    --   extension = {
+    --     foo = "fooscript",
+    --   },
+    --   filename = {
+    --     ["Foofile"] = "fooscript",
+    --   },
+    --   pattern = {
+    --     ["~/%.config/foo/.*"] = "fooscript",
+    --   },
+    -- }
   end,
 }
 
