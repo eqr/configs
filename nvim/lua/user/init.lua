@@ -51,6 +51,16 @@ local config = {
         end ,
       },
       { "ray-x/guihua.lua" },
+      { "mfussenegger/nvim-dap" },
+      { "rcarriga/nvim-dap-ui",
+    config = function()
+      local status_ok, dapui = pcall(require, 'dapui')
+      if not status_ok then
+        return
+      end
+
+      dapui.setup()
+    end},
       --{ "fatih/vim-go" },
       -- {
       --   "ray-x/lsp_signature.nvim",
@@ -197,6 +207,18 @@ local config = {
 
     -- x-ray/go.nvim
     vim.keymap.set("n", "<Leader>lc", ":GoCmt<CR>")
+    vim.keymap.set("n", "<Leader>lga", ":GoAddTag<CR>")
+    vim.keymap.set("n", "<Leader>lgr", ":GoRemoveTag<CR>")
+    vim.keymap.set("n", "<Leader>lta", ":GoTest<CR>")
+    vim.keymap.set("n", "<Leader>ltc", ":GoTestFunc<CR>")
+    vim.keymap.set("n", "<Leader>ltf", ":GoTestFile<CR>")
+    vim.keymap.set("n", "<Leader>lpo", ":GoPkgOutline<CR>")
+    vim.keymap.set("n", "<Leader>lds", ":GoDebug<CR>")
+    vim.keymap.set("n", "<Leader>ldh", ":GoDebug -h<CR>")
+    vim.keymap.set("n", "<Leader>ldt", ":GoDebug -t<CR>")
+    vim.keymap.set("n", "<Leader>ldx", ":GoDebug -s<CR>")
+    vim.keymap.set("n", "<Leader>la", ":GoCodeAction<CR>")
+    vim.keymap.set("n", "<Leader>ll", ":GoCodeLenAct<CR>")
 
     -- Set autocommands
     vim.api.nvim_create_augroup("packer_conf", { clear = true })
@@ -223,3 +245,4 @@ local config = {
 }
 
 return config
+
