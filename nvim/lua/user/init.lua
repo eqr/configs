@@ -45,6 +45,13 @@ local config = {
       -- You can also add new plugins here as well:
       { "github/copilot.vim" },
       { "dracula/vim" },
+      { "ray-x/go.nvim",
+        config = function()
+          require("go").setup()
+        end ,
+      },
+      { "ray-x/guihua.lua" },
+      --{ "fatih/vim-go" },
       -- {
       --   "ray-x/lsp_signature.nvim",
       --   event = "BufRead",
@@ -187,6 +194,9 @@ local config = {
     -- Set key bindings
     vim.keymap.set("n", "<C-s>", ":w!<CR>")
     vim.keymap.set("n", "<Leader>e", ":Neotree reveal<CR>")
+
+    -- x-ray/go.nvim
+    vim.keymap.set("n", "<Leader>lc", ":GoCmt<CR>")
 
     -- Set autocommands
     vim.api.nvim_create_augroup("packer_conf", { clear = true })
