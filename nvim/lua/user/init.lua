@@ -2,7 +2,7 @@ local config = {
 
   -- Set colorscheme
   --colorscheme = "default_theme",
-  colorscheme = "dracula",
+
   -- set vim options here (vim.<first_key>.<second_key> =  value)
   options = {
     opt = {
@@ -61,6 +61,8 @@ local config = {
 
       dapui.setup()
     end},
+      { "sbdchd/neoformat" },
+    
       --{ "fatih/vim-go" },
       -- {
       --   "ray-x/lsp_signature.nvim",
@@ -219,6 +221,9 @@ local config = {
     vim.keymap.set("n", "<Leader>ldx", ":GoDebug -s<CR>")
     vim.keymap.set("n", "<Leader>la", ":GoCodeAction<CR>")
     vim.keymap.set("n", "<Leader>ll", ":GoCodeLenAct<CR>")
+    vim.keymap.set("n", "<Leader>lnt", ":GoAlt<CR>")
+
+    vim.keymap.set("n", "<Leader>fp", ":Telescope commands<CR>")
 
     -- Set autocommands
     vim.api.nvim_create_augroup("packer_conf", { clear = true })
