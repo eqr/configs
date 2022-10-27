@@ -48,21 +48,21 @@ local config = {
       { "ray-x/go.nvim",
         config = function()
           require("go").setup()
-        end ,
+        end,
       },
       { "ray-x/guihua.lua" },
       { "mfussenegger/nvim-dap" },
       { "rcarriga/nvim-dap-ui",
-    config = function()
-      local status_ok, dapui = pcall(require, 'dapui')
-      if not status_ok then
-        return
-      end
+        config = function()
+          local status_ok, dapui = pcall(require, 'dapui')
+          if not status_ok then
+            return
+          end
 
-      dapui.setup()
-    end},
+          dapui.setup()
+        end },
       { "sbdchd/neoformat" },
-    
+
       --{ "fatih/vim-go" },
       -- {
       --   "ray-x/lsp_signature.nvim",
@@ -104,7 +104,7 @@ local config = {
         ["<leader>"] = {
           -- which-key registration table for normal mode, leader prefix
           -- ["N"] = { "<cmd>tabnew<cr>", "New Buffer" },
-       },
+        },
       },
     },
   },
@@ -224,6 +224,7 @@ local config = {
     vim.keymap.set("n", "<Leader>lnt", ":GoAlt<CR>")
 
     vim.keymap.set("n", "<Leader>fp", ":Telescope commands<CR>")
+    vim.keymap.set("n", "<Leader>pp", ":Copilot panel<CR>")
 
     -- Set autocommands
     vim.api.nvim_create_augroup("packer_conf", { clear = true })
@@ -249,5 +250,6 @@ local config = {
   end,
 }
 
-return config
+vim.g.copilot_no_tab_map = true
 
+return config
