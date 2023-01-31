@@ -51,17 +51,7 @@ local config = {
         end,
       },
       { "ray-x/guihua.lua" },
-      { "mfussenegger/nvim-dap" },
-      { "rcarriga/nvim-dap-ui",
-        config = function()
-          local status_ok, dapui = pcall(require, 'dapui')
-          if not status_ok then
-            return
-          end
-
-          dapui.setup()
-        end },
-      { "sbdchd/neoformat" },
+     { "sbdchd/neoformat" },
 
       --{ "fatih/vim-go" },
       -- {
