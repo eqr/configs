@@ -333,21 +333,27 @@ end
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 set --export --prepend PATH "/Users/nazarovegor/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-
-thefuck --alias | source
-
-# Unset the default fish greeting text which messes up Zellij
-set fish_greeting
-
-# Check if we're in an interactive shell
-if status is-interactive
-
-    # At this point, specify the Zellij config dir, so we can launch it manually if we want to
-    export ZELLIJ_CONFIG_DIR=$HOME/.config/zellij
-
-    # Check if our Terminal emulator is Ghostty
-    if [ "$TERM" = xterm-ghostty ]
-        # Launch zellij
-        eval (zellij setup --generate-auto-start fish | string collect)
-    end
+function take
+    mkdir -pv $argv
+    cd $argv
 end
+
+
+# ASDF configuration code
+if test -z $ASDF_DATA_DIR
+    set _asdf_shims "$HOME/.asdf/shims"
+else
+    set _asdf_shims "$ASDF_DATA_DIR/shims"
+end
+
+# Do not use fish_add_path (added in Fish 3.2) because it
+# potentially changes the order of items in PATH
+if not contains $_asdf_shims $PATH
+    set -gx --prepend PATH $_asdf_shims
+end
+set --erase _asdf_shims
+set -x GOPRIVATE github.com/eqr
+set -x EDITOR nvim
+
+# Created by `pipx` on 2025-04-26 20:32:01
+set PATH $PATH /Users/eqr/.local/bin
