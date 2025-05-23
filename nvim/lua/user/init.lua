@@ -51,8 +51,20 @@ local config = {
         end,
       },
       { "ray-x/guihua.lua" },
-     { "sbdchd/neoformat" },
+           { "sbdchd/neoformat" },
 
+      { "mfussenegger/nvim-dap" },
+      { "rcarriga/nvim-dap-ui",
+        config = function()
+          local status_ok, dapui = pcall(require, 'dapui')
+          if not status_ok then
+            return
+          end
+
+          dapui.setup()
+        end },
+      { "sbdchd/neoformat" },
+      { "olical/conjure" },
       --{ "fatih/vim-go" },
       -- {
       --   "ray-x/lsp_signature.nvim",
@@ -205,10 +217,6 @@ local config = {
     vim.keymap.set("n", "<Leader>ltc", ":GoTestFunc<CR>")
     vim.keymap.set("n", "<Leader>ltf", ":GoTestFile<CR>")
     vim.keymap.set("n", "<Leader>lpo", ":GoPkgOutline<CR>")
-    vim.keymap.set("n", "<Leader>lds", ":GoDebug<CR>")
-    vim.keymap.set("n", "<Leader>ldh", ":GoDebug -h<CR>")
-    vim.keymap.set("n", "<Leader>ldt", ":GoDebug -t<CR>")
-    vim.keymap.set("n", "<Leader>ldx", ":GoDebug -s<CR>")
     vim.keymap.set("n", "<Leader>la", ":GoCodeAction<CR>")
     vim.keymap.set("n", "<Leader>ll", ":GoCodeLenAct<CR>")
     vim.keymap.set("n", "<Leader>lnt", ":GoAlt<CR>")

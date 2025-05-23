@@ -95,6 +95,7 @@ alias vim="/usr/local/Cellar/vim/8.0.1175/bin/vim"
 export PATH=/usr/local/sbin:$PATH
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
+export PATH=$HOME/.rd/bin:$PATH
 
 if [ ! -S ~/.ssh/ssh_auth_sock ]; then
   eval `ssh-agent -t8h`
@@ -118,28 +119,38 @@ fpath=(~/.zsh/completion $fpath)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source "$HOME/.cargo/env"
 
-GOPRIVATE=github.com/eqr/eqr-auth,github.com/eqr/eqr-shared
+GOPRIVATE=github.com/eqr/eqr-auth,github.com/eqr/eqr-shared,github.com/adjust/*
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/nazarovegor/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/nazarovegor/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/nazarovegor/mambaforge/etc/profile.d/conda.sh" ]; then
-        . "/Users/nazarovegor/mambaforge/etc/profile.d/conda.sh"
+    if [ -f "/Users/nazarovegor/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/nazarovegor/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/nazarovegor/mambaforge/bin:$PATH"
+        export PATH="/Users/nazarovegor/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
-
-if [ -f "/Users/nazarovegor/mambaforge/etc/profile.d/mamba.sh" ]; then
-    . "/Users/nazarovegor/mambaforge/etc/profile.d/mamba.sh"
-fi
 # <<< conda initialize <<<
 
 export PATH="$(asdf where elixir $(asdf current elixir))/.mix/escripts:$PATH"
 export PATH="$(asdf where elixir $(asdf current elixir))/.mix/escripts:$PATH"
 
 eval $(thefuck --alias)
+
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export VAULT_ADDR="https://vault.adjust.com"
+source ~/.ssh/ssh_helper.sh
+export VAULT_ADDR="https://vault.adjust.com"
+source ~/.ssh/ssh_helper.sh
+export VAULT_ADDR="https://vault.adjust.com"
+source ~/.ssh/ssh_helper.sh
+export VAULT_ADDR="https://vault.adjust.com"
+source ~/.ssh/ssh_helper.sh
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/nazarovegor/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
