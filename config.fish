@@ -3,13 +3,10 @@ function take
     cd $argv
 end
 
-
 test -e {$HOME}/.iterm2_shell_integration.fish; and source {$HOME}/.iterm2_shell_integration.fish
 . ~/.asdf/plugins/java/set-java-home.fish
-set -x GOPATH /Users/nazarovegor/go
 
 alias adjustvpn='sudo openconnect -u egor.nazarov --authgroup=1 --passwd-on-stdin office.adjustinfra.network < {$HOME}/.adjustsec'
-
 
 # opam configuration
 source /Users/nazarovegor/.opam/opam-init/init.fish >/dev/null 2>/dev/null; or true
@@ -338,7 +335,6 @@ function take
     cd $argv
 end
 
-
 # ASDF configuration code
 if test -z $ASDF_DATA_DIR
     set _asdf_shims "$HOME/.asdf/shims"
@@ -357,3 +353,11 @@ set -x EDITOR nvim
 
 # Created by `pipx` on 2025-04-26 20:32:01
 set PATH $PATH /Users/eqr/.local/bin
+
+set -x GOPATH $HOME/go
+set -x GOMODCACHE $GOPATH/pkg/mod
+set -x PATH $PATH $GOPATH/bin
+
+function ytmp3
+    yt-dlp -x --audio-format mp3 "$argv"
+end
