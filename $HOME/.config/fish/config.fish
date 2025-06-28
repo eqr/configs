@@ -1,0 +1,1 @@
+$HOME/code/configs/config.fish
