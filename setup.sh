@@ -21,8 +21,8 @@ attempt() {
   fi
 }
 
-# --- List of src|dst pairs ---
-read -r -d '' LINKS <<'EOF'
+# --- List of src|dst pairs (unquoted here-doc so vars expand) ---
+read -r -d '' LINKS <<EOF
 $HOME/code/configs/karabiner|$HOME/.config/karabiner
 $HOME/code/configs/zshrc|$HOME/.zshrc
 $HOME/code/configs/vimrc|$HOME/.vimrc
