@@ -1,9 +1,65 @@
-ln -s ~/code/configs/karabiner ~/.config
-ln -s ~/code/configs/zshrc ~/.zshrc
-ln -s ~/code/configs/vimrc ~/.vimrc
-ln -s ~/code/configs/ideavimrc ~/.ideavimrc
-cp ~/.config/nvim/lua/user_example cp ~/.config/nvim/lua/user
-ln -s $HOME/code/configs/nvim/lua/user/plugins/neo-tree.lua $HOME/.config/nvim/lua/user/plugins/neo-tree.lua
-ln -s $HOME/code/configs/nvim/lua/user/init.lua $HOME/.config/nvim/lua/user/init.lua
-ln -s $HOME/code/configs/config.fish $HOME/.config/fish/config.fish
-ln -s "$HOME/code/configs/aerospace/aerospace.toml" "$HOME/.config/aerospace/aerospace.toml"
+#!/usr/bin/env bash
+set -uo pipefail
+IFS=$'\n\t'
+
+# --- Helpers ---
+backup() {
+  local dst=$1
+  [[ -e $dst && ! -L $dst ]] &&
+    mv "$dst" "${dst}.bak_$(date +%Y%m%d%H%M%S)"
+}
+
+ensure_dir() {
+  mkdir -p "$(dirname "$1")"
+}
+
+attempt() {
+  local desc=$1
+  shift
+  if ! "$@"; then
+    echo "Warning: failed to $desc" >&2
+  fi
+}
+
+# --- List of src|dst pairs ---
+read -r -d '' LINKS <<'EOF'
+$HOME/code/configs/karabiner|$HOME/.config/karabiner
+$HOME/code/configs/zshrc|$HOME/.zshrc
+$HOME/code/configs/vimrc|$HOME/.vimrc
+$HOME/code/configs/ideavimrc|$HOME/.ideavimrc
+$HOME/code/configs/config.fish|$HOME/.config/fish/config.fish
+$HOME/code/configs/aerospace/aerospace.toml|$HOME/.config/aerospace/aerospace.toml
+$HOME/code/configs/claude/CLAUDE.md|$HOME/.claude/CLAUDE.md
+$HOME/code/configs/claude/commands|$HOME/.claude/commands
+EOF
+
+# --- Create symlinks ---
+while IFS='|' read -r src dst; do
+  {
+    ensure_dir "$dst"
+    backup "$dst"
+    ln -sfn "$src" "$dst"
+    echo "Linked: $dst → $src"
+  } || echo "Warning: linking $dst" >&2
+done <<<"$LINKS"
+
+# --- Special case: copy only if example exists ---
+EX="$HOME/.config/nvim/lua/user_example"
+DESTDIR="$HOME/.config/nvim/lua"
+if [[ -e $EX ]]; then
+  attempt "copy nvim example" cp -n "$EX" "$DESTDIR/user"
+else
+  echo "Skipping nvim example: $EX not found" >&2
+fi
+
+# --- Per-file nvim symlinks ---
+for f in plugins/neo-tree.lua init.lua; do
+  src="$HOME/code/configs/nvim/lua/user/$f"
+  dst="$HOME/.config/nvim/lua/user/$f"
+  {
+    ensure_dir "$dst"
+    backup "$dst"
+    ln -sfn "$src" "$dst"
+    echo "Linked: $dst → $src"
+  } || echo "Warning: linking $dst" >&2
+done
