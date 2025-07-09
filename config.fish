@@ -3,7 +3,6 @@ function take
     cd $argv
 end
 
-test -e {$HOME}/.iterm2_shell_integration.fish; and source {$HOME}/.iterm2_shell_integration.fish
 . ~/.asdf/plugins/java/set-java-home.fish
 
 alias adjustvpn='sudo openconnect -u egor.nazarov --authgroup=1 --passwd-on-stdin office.adjustinfra.network < {$HOME}/.adjustsec'
@@ -360,4 +359,9 @@ set -x PATH $PATH $GOPATH/bin
 
 function ytmp3
     yt-dlp -x --audio-format mp3 "$argv"
+end
+
+pay-respects fish | source
+function cbc --description "Pipe stdout and stderr to pbcopy"
+    $argv 2>&1 | pbcopy
 end
