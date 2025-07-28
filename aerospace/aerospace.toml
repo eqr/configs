@@ -132,6 +132,8 @@ automatically-unhide-macos-hidden-apps = false
     alt-c = 'workspace C'
     alt-q = 'workspace Q'
     alt-w = 'workspace W'
+    alt-e = 'workspace E'
+    alt-z = 'workspace Z'
 
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
@@ -149,6 +151,8 @@ automatically-unhide-macos-hidden-apps = false
     alt-shift-c = 'move-node-to-workspace C'
     alt-shift-q = 'move-node-to-workspace Q'
     alt-shift-w = 'move-node-to-workspace W'
+    alt-shift-e = 'move-node-to-workspace E'
+    alt-shift-z = 'move-node-to-workspace Z'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     alt-tab = 'workspace-back-and-forth'
