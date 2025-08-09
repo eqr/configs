@@ -63,3 +63,19 @@ for f in plugins/neo-tree.lua init.lua; do
     echo "Linked: $dst → $src"
   } || echo "Warning: linking $dst" >&2
 done
+
+# --- Fish functions symlinks ---
+FISH_FUNCTIONS_SRC="$HOME/code/configs/fish/functions"
+FISH_FUNCTIONS_DST="$HOME/.config/fish/functions"
+if [[ -d "$FISH_FUNCTIONS_SRC" ]]; then
+  ensure_dir "$FISH_FUNCTIONS_DST"
+  for f in "$FISH_FUNCTIONS_SRC"/*.fish; do
+    [[ -f "$f" ]] || continue
+    fname=$(basename "$f")
+    src="$f"
+    dst="$FISH_FUNCTIONS_DST/$fname"
+    backup "$dst"
+    ln -sfn "$src" "$dst"
+    echo "Linked: $dst → $src"
+  done
+fi
