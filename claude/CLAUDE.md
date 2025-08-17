@@ -36,3 +36,5 @@ When writing a commit, never write that the commit was co-authored by Claude.
   - Interfaces are always passed by value (they're references internally)
   - Value receivers are preferred unless the method needs to modify the struct
 
+
+- don't write comments to removed code, they reference nothing and don't provide any value
